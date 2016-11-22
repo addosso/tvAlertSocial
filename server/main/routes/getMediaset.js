@@ -14,7 +14,7 @@ const mappingCanali = {
     'topcrime': "LT",
     'iris': "KI",
     'tgcom24': "TG24"
-}
+};
 var http = require('http');
 
 
@@ -50,7 +50,6 @@ function routerMediaset(express_instance) {
 
             var mese = '/'+dayArray[2]+dayArray[1]+'/';
             var allDayAndChannel = dayArray[2]+''+dayArray[1]+''+dayArray[0]+'_'+mappingCanali[request_obj.canale]+'.sjson';
-           console.log('requesting..'+mese+allDayAndChannel);
             return mese+allDayAndChannel;
         }
     })
