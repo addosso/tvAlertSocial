@@ -3,7 +3,7 @@
  */
 module.exports = routerSky;
 
-const skyChannel = 'www.guidatv.sky.it';
+const skyChannel = 'guidatv.sky.it';
 
 const mappingCanali = {
  
