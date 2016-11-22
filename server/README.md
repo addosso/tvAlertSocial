@@ -109,3 +109,11 @@ Per cambiare porta, al momento della digitazione del comando su shell, inserire 
               })
               
 * __day__ ( Formato: gg/mm/aaaa )
+
+# '/oraInOnda'
+### Parametri Ammessi
+
+    Nessun Parametro ammesso
+#### Ritorno
+    JSON che ha come chiavi il palinsesto televisivo e come valore un JSON sulle informazioni riguardanti la diretta.
+    !!--Da vedere meglio --!!
