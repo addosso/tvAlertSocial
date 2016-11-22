@@ -3,11 +3,15 @@
  */
 const modules = "../node_modules/";
 const route = "./routes/";
-const port = 8083;
+var port = 8083;
 
 var express = getModule('express');
 var fs = require('fs');
 var service = express();
+
+process.argv.forEach(function (val, index, array) {
+    if(val.indexOf('port=') != -1) port = (val.replace('port=',''));
+});
 
 initRoute(service);
 
