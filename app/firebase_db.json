@@ -1,0 +1,134 @@
+{
+    "messages": {
+        "-KJNARNlP47TwU1tTPrd": {
+            "date": {
+                "date": 3,
+                "day": 5,
+                "hours": 17,
+                "minutes": 31,
+                "month": 5,
+                "seconds": 45,
+                "time": 1464989505080,
+                "timezoneOffset": 240,
+                "year": 116
+            },
+            "msg": "Hey Joe",
+            "photoUrl": "",
+            "receiver": "Uhph7zwnAyQnSqHnw0uWbHI6zpv1",
+            "sender": "P4hJs5t9BaN6QsFYcGLRw6B5a7P2",
+            "sent": false,
+            "status": 1
+        },
+        "-KJNCItxjYmAh5XNTLGP": {
+            "date": {
+                "date": 3,
+                "day": 5,
+                "hours": 17,
+                "minutes": 39,
+                "month": 5,
+                "seconds": 54,
+                "time": 1464989994581,
+                "timezoneOffset": 240,
+                "year": 116
+            },
+            "msg": "How are you guys doing",
+            "photoUrl": "",
+            "receiver": "Uhph7zwnAyQnSqHnw0uWbHI6zpv1",
+            "sender": "P4hJs5t9BaN6QsFYcGLRw6B5a7P2",
+            "sent": true,
+            "status": 1
+        },
+        "-KJNCYPfBfCI5PiqQ4ZX": {
+            "date": {
+                "date": 3,
+                "day": 5,
+                "hours": 17,
+                "minutes": 40,
+                "month": 5,
+                "seconds": 58,
+                "time": 1464990058115,
+                "timezoneOffset": 240,
+                "year": 116
+            },
+            "msg": "OK seems your busy catch you later",
+            "photoUrl": "",
+            "receiver": "Uhph7zwnAyQnSqHnw0uWbHI6zpv1",
+            "sender": "P4hJs5t9BaN6QsFYcGLRw6B5a7P2",
+            "sent": true,
+            "status": 1
+        },
+        "-KJNDuBgl4eGHzz7jG_U": {
+            "date": {
+                "date": 3,
+                "day": 5,
+                "hours": 17,
+                "minutes": 46,
+                "month": 5,
+                "seconds": 53,
+                "time": 1464990413564,
+                "timezoneOffset": 240,
+                "year": 116
+            },
+            "msg": "Checking back in",
+            "photoUrl": "",
+            "receiver": "Uhph7zwnAyQnSqHnw0uWbHI6zpv1",
+            "sender": "P4hJs5t9BaN6QsFYcGLRw6B5a7P2",
+            "sent": true,
+            "status": 1
+        },
+        "-KJNEDgwYsIX7I0EGWbM": {
+            "date": {
+                "date": 3,
+                "day": 5,
+                "hours": 17,
+                "minutes": 48,
+                "month": 5,
+                "seconds": 17,
+                "time": 1464990497565,
+                "timezoneOffset": 240,
+                "year": 116
+            },
+            "msg": "Apologies was away for a while",
+            "photoUrl": "",
+            "receiver": "P4hJs5t9BaN6QsFYcGLRw6B5a7P2",
+            "sender": "Uhph7zwnAyQnSqHnw0uWbHI6zpv1",
+            "sent": true,
+            "status": 1
+        },
+        "-KNcnTK_pg_s2MOOZ8W1": {
+            "date": {
+                "date": 26,
+                "day": 2,
+                "hours": 16,
+                "minutes": 3,
+                "month": 6,
+                "seconds": 19,
+                "time": 1469563399536,
+                "timezoneOffset": 240,
+                "year": 116
+            },
+            "msg": "hey",
+            "photoUrl": "",
+            "receiver": "Uhph7zwnAyQnSqHnw0uWbHI6zpv1",
+            "sender": "P4hJs5t9BaN6QsFYcGLRw6B5a7P2",
+            "sent": true,
+            "status": 1
+        }
+    },
+    "users": {
+        "P4hJs5t9BaN6QsFYcGLRw6B5a7P2": {
+            "email": "demo@myapptemplates.com",
+            "id": "P4hJs5t9BaN6QsFYcGLRw6B5a7P2",
+            "online": true,
+            "room": ["home"],
+            "username": "Joe Soap"
+        },
+        "Uhph7zwnAyQnSqHnw0uWbHI6zpv1": {
+            "email": "demo1@myapptemplates.com",
+            "id": "Uhph7zwnAyQnSqHnw0uWbHI6zpv1",
+            "online": true,
+            "room": ["home"],
+            "username": "Busy Bee"
+        }
+    }
+}

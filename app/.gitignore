@@ -1,0 +1,9 @@
+/app/build/
+/build/
+/.idea/
+/.gradle/
+/ChattDemoMain.iml
+/app.iml
+/api.pdf
+/app/app.iml
+/app/app-app.iml
