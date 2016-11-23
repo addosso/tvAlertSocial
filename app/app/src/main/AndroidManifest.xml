@@ -47,6 +47,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e61fe048889b6c5e0d3ca861a3717fa5f446ed83"/>
     </application>
 
 </manifest>

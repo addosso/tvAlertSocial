@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Chatt</string>
+    <string name="app_name">TvAlertSocial</string>
     <string name="type_msg">Type message</string>    
     
 <string name="drawer_open">Open</string>

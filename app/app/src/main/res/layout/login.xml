@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.tvalertsocial.Login" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/pad_20dp"
-        android:paddingLeft="@dimen/pad_15dp"
-        android:paddingRight="@dimen/pad_15dp"
-        android:paddingTop="@dimen/pad_20dp" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo_login"
-            android:layout_marginBottom="@dimen/pad_20dp" />
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/pad_20dp"
+    android:paddingLeft="@dimen/pad_15dp"
+    android:paddingRight="@dimen/pad_15dp"
+    android:paddingTop="@dimen/pad_20dp"
+    android:weightSum="1"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <EditText
             android:id="@+id/user"
@@ -46,29 +35,39 @@
             android:inputType="textPassword" >
         </EditText>
 
-        <LinearLayout
-            android:id="@+id/main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btnLogin"
-                style="@style/btn_white_large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/log_in" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/btnReg"
-                style="@style/btn_white_large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/register" 
-                android:layout_marginLeft="@dimen/pad_10dp"/>
-        </LinearLayout>
-    </LinearLayout>
+        <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:id="@+id/login_button"
+            android:layout_width="303dp"
+            android:layout_height="114dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
 
-</ScrollView>
+        <Button
+            android:id="@+id/btnReg"
+            style="@style/btn_white_large"
+            android:layout_width="144dp"
+            android:layout_height="31dp"
+            android:text="@string/register"
+            android:layout_marginLeft="@dimen/pad_10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/login_button"
+            android:layout_alignBottom="@+id/btnLogin"/>
+
+        <Button
+            android:id="@+id/btnLogin"
+            style="@style/btn_white_large"
+            android:layout_width="97dp"
+            android:layout_height="38dp"
+            android:text="@string/log_in"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/login_button"
+            android:layout_marginStart="9dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
+
