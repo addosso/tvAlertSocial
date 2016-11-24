@@ -82,7 +82,7 @@ const mappingCanali = {
 };
 
 var http = require('http');
-
+var hourUtils = require('../utils/hourUtils');
 
 function routerSky(express_instance) {
 
@@ -110,14 +110,56 @@ function routerSky(express_instance) {
 
         }).end();
 
-        function createQueryString(request_obj){
-            var dayArray = request_obj.giorno.split('/');
-            if(dayArray.length < 3) throw "errore nel giorno";
-            var year = dayArray[2].substring(2,4);
-            var giornoCost = '/'+year+'_'+dayArray[1]+'_'+dayArray[0]+'/';
-            var fileName = mappingCanali[request_obj.canale]+'.js';
-            return giornoCost+fileName;
-        }
-    })}
+
+    });
+
+    express_instance.get('/sky/fromnow', (req, res) => {
+
+
+        var _self = this;
+        this.res = res;
+        http.request({
+            host: skyChannel,
+            method: 'GET',
+            path: '/app/guidatv/contenuti/data/grid'+ createQueryString({
+                giorno: hourUtils.getDay(),
+                canale: req.query.canale
+            })
+
+        }, (res) => {
+
+            let response = "";
+            res.on('data', (chunk) => {
+                response += chunk;
+            });
+            res.on('end', () => {
+                response = JSON.parse(response);
+                let from_now = [];
+                response.plan.map(act => {
+                    if(act.starttime > hourUtils.getHour())
+                    from_now.push(act);
+                });
+                _self.res.send(from_now);
+            })
+
+        }).end();
+
+
+
+    });
+
+
+
+
+
+    function createQueryString(request_obj){
+        var dayArray = request_obj.giorno.split('/');
+        if(dayArray.length < 3) throw "errore nel giorno";
+        var year = dayArray[2].substring(2,4);
+        var giornoCost = '/'+year+'_'+dayArray[1]+'_'+dayArray[0]+'/';
+        var fileName = mappingCanali[request_obj.canale]+'.js';
+        return giornoCost+fileName;
+    }
+}
 
 
