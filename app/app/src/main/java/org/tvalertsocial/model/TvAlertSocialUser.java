@@ -3,53 +3,49 @@ package org.tvalertsocial.model;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * The Class ChatUse is a Java Bean class that represents a single user.
  */
 @IgnoreExtraProperties
-public class ChatUser implements Serializable {
+public class TvAlertSocialUser implements Serializable {
 
-    public String id;
+    public long id;
     public String username;
-    public String email;
+    private boolean onTwitter;
     public Boolean online;
-    public ArrayList<String> room;
+    public Room room;
 
-    public ChatUser() {
+    public TvAlertSocialUser() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public ChatUser(String id, String username, String email, Boolean online, ArrayList<String> room) {
+    public TvAlertSocialUser(long id, String username, Boolean online, boolean onTwitter) {
         this.id = id;
         this.username = username;
-        this.email = email;
+        this.onTwitter = onTwitter;
         this.online = online;
-        this.room = room;
+        this.room = null;   //ancora non è entrato in nessuna room, si è solo loggato
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
     public Boolean isOnline() {
         return online;
     }
 
-    public ArrayList<String> getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -57,16 +53,19 @@ public class ChatUser implements Serializable {
         this.username = username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void setOnline(Boolean online) {
         this.online = online;
     }
 
-    public void setRoom(ArrayList<String> room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 
+    public boolean isOnTwitter() {
+        return onTwitter;
+    }
+
+    public void setOnTwitter(boolean onTwitter) {
+        this.onTwitter = onTwitter;
+    }
 }

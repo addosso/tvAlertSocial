@@ -1,30 +1,19 @@
 package org.tvalertsocial;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.tvalertsocial.custom.CustomActivity;
-import org.tvalertsocial.model.ChatUser;
-import org.tvalertsocial.utils.Const;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.tvalertsocial.custom.CustomActivity;
+import org.tvalertsocial.model.TvAlertSocialUser;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -37,10 +26,10 @@ public class UserList extends CustomActivity
 	/** Users database reference */
 	DatabaseReference database;
 	/** The Chat list. */
-	private ArrayList<ChatUser> uList;
+	private ArrayList<TvAlertSocialUser> uList;
 
 	/** The user. */
-	public static ChatUser user;
+	public static TvAlertSocialUser user;
 
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
@@ -99,8 +88,8 @@ public class UserList extends CustomActivity
 				getString(R.string.alert_loading));
 
         // Pull the users list once no sync required.
-        database.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
+	   /* database.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
             public void onDataChange(DataSnapshot dataSnapshot) {dia.dismiss();
                 long size  = dataSnapshot.getChildrenCount();
                 if(size == 0) {
@@ -109,9 +98,9 @@ public class UserList extends CustomActivity
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
-                uList = new ArrayList<ChatUser>();
+                uList = new ArrayList<TvAlertSocialUser>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ChatUser user = ds.getValue(ChatUser.class);
+                    TvAlertSocialUser user = ds.getValue(TvAlertSocialUser.class);
                     Logger.getLogger(UserList.class.getName()).log(Level.ALL,user.getUsername());
                     if(!user.getId().contentEquals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                         uList.add(user);
@@ -135,7 +124,7 @@ public class UserList extends CustomActivity
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 	}
 
 	/**
@@ -158,7 +147,7 @@ public class UserList extends CustomActivity
 		 * @see android.widget.Adapter#getItem(int)
 		 */
 		@Override
-		public ChatUser getItem(int arg0)
+		public TvAlertSocialUser getItem(int arg0)
 		{
 			return uList.get(arg0);
 		}
@@ -181,7 +170,7 @@ public class UserList extends CustomActivity
 			if (v == null)
 				v = getLayoutInflater().inflate(R.layout.chat_item, null);
 
-			ChatUser c = getItem(pos);
+			TvAlertSocialUser c = getItem(pos);
 			TextView lbl = (TextView) v;
 			lbl.setText(c.getUsername());
 			lbl.setCompoundDrawablesWithIntrinsicBounds(

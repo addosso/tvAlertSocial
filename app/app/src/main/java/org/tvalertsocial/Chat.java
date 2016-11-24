@@ -17,10 +17,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.tvalertsocial.custom.CustomActivity;
-import org.tvalertsocial.model.ChatUser;
-import org.tvalertsocial.model.Conversation;
-import org.tvalertsocial.utils.Const;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +25,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.tvalertsocial.custom.CustomActivity;
+import org.tvalertsocial.model.Conversation;
+import org.tvalertsocial.model.TvAlertSocialUser;
+import org.tvalertsocial.utils.Const;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,7 +61,7 @@ public class Chat extends CustomActivity {
     /**
      * The user name of buddy.
      */
-    private ChatUser buddy;
+    private TvAlertSocialUser buddy;
 
     /**
      * The date of last message in conversation.
@@ -88,7 +89,7 @@ public class Chat extends CustomActivity {
 
         setTouchNClick(R.id.btnSend);
 
-        buddy = (ChatUser) getIntent().getSerializableExtra(Const.EXTRA_DATA);
+        buddy = (TvAlertSocialUser) getIntent().getSerializableExtra(Const.EXTRA_DATA);
 
         ActionBar actionBar = getActionBar();
         if(actionBar != null)
@@ -144,7 +145,7 @@ public class Chat extends CustomActivity {
             final Conversation conversation = new Conversation(s,
                     Calendar.getInstance().getTime(),
                     user.getUid(),
-                    buddy.getId(),
+                    buddy.getId() + "",
                     "");
             conversation.setStatus(Conversation.STATUS_SENDING);
             convList.add(conversation);

@@ -3,22 +3,23 @@ package org.tvalertsocial;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.tvalertsocial.custom.CustomActivity;
-import org.tvalertsocial.model.ChatUser;
-import org.tvalertsocial.utils.Utils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.tvalertsocial.custom.CustomActivity;
+import org.tvalertsocial.model.TvAlertSocialUser;
+
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -39,31 +40,82 @@ public class Login extends CustomActivity
     /** Login progress dialog */
     private ProgressDialog loginProgressDlg;
 
-    /* (non-Javadoc)
+	// Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+	private static final String TWITTER_KEY = "eAY5EkcwsGjLdaUUez0Zcv7Nb";
+	private static final String TWITTER_SECRET = "ei3OZJn70B1DE6Bnwfeb6Ln28XGE9Xf2KDzHt3zWvhTXnLLqXq";
+
+	private TwitterSession session;
+	private String twitterToken;
+	private String twitterSecret;
+	private TwitterLoginButton loginButton;
+
+
+	/* (non-Javadoc)
 	 * @see com.chatt.custom.CustomActivity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+		Fabric.with(this, new Twitter(authConfig));
 		setContentView(R.layout.login);
 
 		setTouchNClick(R.id.btnLogin);
 		setTouchNClick(R.id.btnReg);
+		setTouchNClick(R.id.login_button);
 
 		user = (EditText) findViewById(R.id.user);
 		pwd = (EditText) findViewById(R.id.pwd);
 
+		loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+		loginButton.setCallback(new Callback<TwitterSession>() {
+			@Override
+			public void success(Result<TwitterSession> result) {
+				session = Twitter.getSessionManager().getActiveSession();
+				TwitterAuthToken authToken = session.getAuthToken();
+				twitterToken = authToken.token;
+				twitterSecret = authToken.secret;
+				UserList.user = new TvAlertSocialUser(session.getUserId(), session.getUserName(), true, true);
+				Intent i = new Intent(Login.this, UserList.class);
+				startActivity(i);
+				finish();
+
+			}
+
+			@Override
+			public void failure(TwitterException exception) {
+				Toast.makeText(Login.this, "Twitter login error!", Toast.LENGTH_SHORT).show();
+			}
+		});
+
+
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		//Adding the login result back to the button
+		if (requestCode == 10 && resultCode == RESULT_OK)
+			finish();
+		loginButton.onActivityResult(requestCode, resultCode, data);
+	}
 	/* (non-Javadoc)
 	 * @see com.chatt.custom.CustomActivity#onClick(android.view.View)
 	 */
+
 	@Override
 	public void onClick(View v)
 	{
 		super.onClick(v);
-		if (v.getId() == R.id.btnReg)
+		//if (v.getId() == R.id.login_button){
+			/*loginProgressDlg = ProgressDialog.show(this, null,
+					getString(R.string.alert_wait));*/
+
+		//}
+
+/*		if (v.getId() == R.id.btnReg)
 		{
 			startActivityForResult(new Intent(this, Register.class), 10);
 		}
@@ -94,7 +146,7 @@ public class Login extends CustomActivity
                         else {
                             ArrayList<String> defaultRoom = new ArrayList<String>();
                             defaultRoom.add("home");
-                            UserList.user = new ChatUser(task.getResult().getUser().getUid(),task.getResult().getUser().getDisplayName(), task.getResult().getUser().getEmail(),true,defaultRoom);
+                            UserList.user = new TvAlertSocialUser(task.getResult().getUser().getUid(),task.getResult().getUser().getDisplayName(), task.getResult().getUser().getEmail(),true,defaultRoom);
                             startActivity(new Intent(Login.this, UserList.class));
                             finish();
                         }
@@ -105,18 +157,9 @@ public class Login extends CustomActivity
             loginProgressDlg = ProgressDialog.show(this, null,
                     getString(R.string.alert_wait));
 
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.FragmentActivity#onActivityResult(int, int, android.content.Intent)
-	 */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 10 && resultCode == RESULT_OK)
-			finish();
+		}*/
 
 	}
+
+
 }

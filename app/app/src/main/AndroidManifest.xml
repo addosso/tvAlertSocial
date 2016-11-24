@@ -15,7 +15,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:name="org.tvalertsocial.ChattApp">
+        android:theme="@style/AppTheme"
+        android:name="org.tvalertsocial.TvAlertSocial">
         <activity
             android:name="org.tvalertsocial.Login"
             android:screenOrientation="portrait"
@@ -52,5 +53,6 @@
             android:name="io.fabric.ApiKey"
             android:value="e61fe048889b6c5e0d3ca861a3717fa5f446ed83"/>
     </application>
-
+    <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity">
+    </activity>
 </manifest>

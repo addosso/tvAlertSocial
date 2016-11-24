@@ -8,9 +8,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 
-import org.tvalertsocial.custom.CustomActivity;
-import org.tvalertsocial.model.ChatUser;
-import org.tvalertsocial.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,6 +15,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.tvalertsocial.custom.CustomActivity;
+import org.tvalertsocial.model.TvAlertSocialUser;
+import org.tvalertsocial.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -105,9 +106,9 @@ public class Register extends CustomActivity
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Logger.getLogger(Register.class.getName()).log(Level.ALL, "User profile updated.");
-                                // Construct the ChatUser
-                                UserList.user = new ChatUser(user.getUid(),displayName, email,true,defaultRoom);
-                                // Setup link to users database
+								// Construct the TvAlertSocialUser
+								UserList.user = new TvAlertSocialUser(Long.parseLong(user.getUid()), displayName, true, false);
+								// Setup link to users database
                                 FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).setValue(UserList.user);
                                 startActivity(new Intent(Register.this, UserList.class));
                                 finish();

@@ -16,13 +16,6 @@
         android:paddingRight="@dimen/pad_15dp"
         android:paddingTop="@dimen/pad_20dp" >
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/pad_20dp"
-            android:src="@drawable/logo_login" />
-
         <EditText
             android:id="@+id/displayName"
             style="@style/editext_graybg"
