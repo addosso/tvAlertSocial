@@ -77,8 +77,9 @@ public class Login extends CustomActivity
 				TwitterAuthToken authToken = session.getAuthToken();
 				twitterToken = authToken.token;
 				twitterSecret = authToken.secret;
-				UserList.user = new TvAlertSocialUser(session.getUserId(), session.getUserName(), true, true);
-				Intent i = new Intent(Login.this, UserList.class);
+				TvAlertSocialUser user = new TvAlertSocialUser(session.getUserId(), session.getUserName(), true, true);
+				Intent i = new Intent(Login.this, RoomList.class);
+				i.putExtra("user", user);
 				startActivity(i);
 				finish();
 

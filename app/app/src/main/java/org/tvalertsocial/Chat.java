@@ -1,38 +1,25 @@
 package org.tvalertsocial;
 
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.text.InputType;
-import android.text.format.DateUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+import com.twitter.sdk.android.tweetui.SearchTimeline;
+import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 import org.tvalertsocial.custom.CustomActivity;
 import org.tvalertsocial.model.Conversation;
 import org.tvalertsocial.model.TvAlertSocialUser;
-import org.tvalertsocial.utils.Const;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -48,10 +35,10 @@ public class Chat extends CustomActivity {
      */
     private ArrayList<Conversation> convList;
 
-    /**
-     * The chat adapter.
-     */
-    private ChatAdapter adp;
+ /*   *//**
+	 * The chat adapter.
+	 *//*
+	private ChatAdapter adp;*/
 
     /**
      * The Editext to compose the message.
@@ -59,41 +46,56 @@ public class Chat extends CustomActivity {
     private EditText txt;
 
     /**
-     * The user name of buddy.
-     */
-    private TvAlertSocialUser buddy;
+	 * The user name of user .
+	 */
+	private TvAlertSocialUser user;
 
     /**
      * The date of last message in conversation.
      */
     private Date lastMsgDate;
 
-    /* (non-Javadoc)
-     * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
-     */
-    @Override
+	private TwitterSession twitterSession = null;
+
+	private String hashtag;
+
+	private ListView tweetList;
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
+	 */
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
 
-        convList = new ArrayList<Conversation>();
-        ListView list = (ListView) findViewById(R.id.list);
-        adp = new ChatAdapter();
-        list.setAdapter(adp);
-        list.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        list.setStackFromBottom(true);
+		convList = new ArrayList<>();
+		tweetList = (ListView) findViewById(R.id.list);
+		final ArrayAdapter<Conversation> conversationsAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, convList);
+		tweetList.setAdapter(conversationsAdapter);
+		tweetList.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+		tweetList.setStackFromBottom(true);
 
-        txt = (EditText) findViewById(R.id.txt);
-        txt.setInputType(InputType.TYPE_CLASS_TEXT
-                | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        /*txt = (EditText) findViewById(R.id.txt);
+		txt.setInputType(InputType.TYPE_CLASS_TEXT
+                | InputType.TYPE_TEXT_FLAG_MULTI_LINE);*/
 
         setTouchNClick(R.id.btnSend);
 
-        buddy = (TvAlertSocialUser) getIntent().getSerializableExtra(Const.EXTRA_DATA);
+		//getting Intents
+		Bundle extras = getIntent().getExtras();
+		user = (TvAlertSocialUser) extras.get("user");
+		hashtag = (String) extras.get("hashtag");
+		String room_name = (String) extras.get("item_show_title");
 
-        ActionBar actionBar = getActionBar();
-        if(actionBar != null)
-            actionBar.setTitle(buddy.getUsername());
+		//getting twitter session
+		twitterSession = Twitter.getSessionManager().getActiveSession();
+
+		ActionBar actionBar = getActionBar();
+		if(actionBar != null)
+			actionBar.setTitle(room_name);
+
+		updateTweetListBySearch();
 
     }
 
@@ -121,18 +123,52 @@ public class Chat extends CustomActivity {
     public void onClick(View v) {
         super.onClick(v);
         if (v.getId() == R.id.btnSend) {
-            sendMessage();
-        }
+			sendMessageByTweet();
+		}
 
     }
+
+	private void updateTweetListBySearch() {
+		final SearchTimeline searchTimeline = new SearchTimeline.Builder().query(hashtag).build();
+		final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter(this, searchTimeline);
+		tweetList.setAdapter(adapter);
+		/*
+		ArrayList<Tweet> tweets = new ArrayList<> ();
+		for(int i= 0; i<adapter.getCount();i++)
+			tweets.add(adapter.getItem(i));
+		*/
+
+	}
+
+	private void sendMessageByTweet() {
+/*		if (txt.length() == 0)
+			return;*/
+
+/*		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(txt.getWindowToken(), 0);*/
+
+//		String message = txt.getText().toString();
+
+		if (user != null && user.isOnTwitter() && twitterSession != null) {
+			TweetComposer.Builder builder = new TweetComposer.Builder(this)
+					.text(hashtag + " ");
+			builder.show();
+//			com.twitter.sdk.android.core.services.StatusesService statusesService = Twitter.getApiClient(twitterSession).getStatusesService();
+
+
+		}
+
+
+//		txt.setText(null);
+	}
 
     /**
      * Call this method to Send message to opponent. It does nothing if the text
      * is empty otherwise it creates a Parse object for Chat message and send it
      * to Parse server.
      */
-    private void sendMessage() {
-        if (txt.length() == 0)
+	private void sendMessage() {/*
+		if (txt.length() == 0)
             return;
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -178,14 +214,14 @@ public class Chat extends CustomActivity {
                     );
         }
         adp.notifyDataSetChanged();
-        txt.setText(null);
-    }
+        txt.setText(null);*/
+	}
 
     /**
      * Load the conversation list from Parse server and save the date of last
      * message that will be used to load only recent new messages
      */
-    private void loadConversationList() {
+	private void loadConversationList() {/*
 
         FirebaseDatabase.getInstance().getReference("messages").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -213,42 +249,43 @@ public class Chat extends CustomActivity {
             }
         });
 
-    }
+  */
+	}
 
     /**
      * The Class ChatAdapter is the adapter class for Chat ListView. This
      * adapter shows the Sent or Receieved Chat message in each list item.
-     */
-    private class ChatAdapter extends BaseAdapter {
+	 *//*
+	private class ChatAdapter extends BaseAdapter {
 
-        /* (non-Javadoc)
-         * @see android.widget.Adapter#getCount()
-         */
-        @Override
+        *//* (non-Javadoc)
+		 * @see android.widget.Adapter#getCount()
+         *//*
+		@Override
         public int getCount() {
             return convList.size();
         }
 
-        /* (non-Javadoc)
-         * @see android.widget.Adapter#getItem(int)
-         */
-        @Override
+        *//* (non-Javadoc)
+		 * @see android.widget.Adapter#getItem(int)
+         *//*
+		@Override
         public Conversation getItem(int arg0) {
             return convList.get(arg0);
         }
 
-        /* (non-Javadoc)
-         * @see android.widget.Adapter#getItemId(int)
-         */
-        @Override
+        *//* (non-Javadoc)
+		 * @see android.widget.Adapter#getItemId(int)
+         *//*
+		@Override
         public long getItemId(int arg0) {
             return arg0;
         }
 
-        /* (non-Javadoc)
-         * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
-         */
-        @SuppressLint("InflateParams")
+        *//* (non-Javadoc)
+		 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+         *//*
+		@SuppressLint("InflateParams")
         @Override
         public View getView(int pos, View v, ViewGroup arg2) {
             Conversation c = getItem(pos);
@@ -282,7 +319,7 @@ public class Chat extends CustomActivity {
             return v;
         }
 
-    }
+    }*/
 
     /* (non-Javadoc)
      * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)

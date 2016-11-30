@@ -1,0 +1,20 @@
+[
+  {
+    "name": "rai1",
+    "show": {
+      "title": "Pacchi",
+      "hashtag": "#lapoElkann",
+      "starttime": 1234,
+      "endtime": 1234
+    }
+  },
+  {
+    "name": "rai2",
+    "show": {
+      "title": "Rosello",
+      "hashtah": "#dajeRoma",
+      "starttime": 1234,
+      "endtime": 1234
+    }
+  }
+]

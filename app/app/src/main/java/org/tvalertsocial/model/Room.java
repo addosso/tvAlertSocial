@@ -1,5 +1,8 @@
 package org.tvalertsocial.model;
 
+import org.tvalertsocial.Channel;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,21 +11,21 @@ import java.util.List;
 
 public class Room {
 
-	private String title;
+	private Channel channel;
 	private List<TvAlertSocialUser> users;
 
-	public Room(String title, List<TvAlertSocialUser> users) {
-		this.users = users;
-		this.title = title;
+	public Room(Channel channel) {
+		this.users = new ArrayList<>();
+		this.channel = channel;
 
 	}
 
-	public String getTitle() {
-		return title;
+	public Channel getChannel() {
+		return channel;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 
 	public List<TvAlertSocialUser> getUsers() {
@@ -31,5 +34,10 @@ public class Room {
 
 	public void setUsers(List<TvAlertSocialUser> users) {
 		this.users = users;
+	}
+
+	@Override
+	public String toString() {
+		return channel.getShow().getTitle();
 	}
 }

@@ -37,7 +37,7 @@
         </activity>
         
         <activity
-            android:name="org.tvalertsocial.UserList"
+            android:name="org.tvalertsocial.RoomList"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" >
