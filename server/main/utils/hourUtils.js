@@ -2,31 +2,18 @@
  * Created by fortunato on 24/11/16.
  */
 
+var hourUtils = {
 
-module.exports = hourUtils();
-
-
-
-function hourUtils(){
-
-    function getDay(){
-        let now = new Date();
-        return now.getDate()+'/'+(now.getMonth()+1)+'/'+now.getFullYear();
+    getDay(){
+        var now = new Date();
+        return ((now.getDate()+'').length == 1? '0'+now.getDate(): now.getDate())+'/'+(now.getMonth()+1)+'/'+now.getFullYear();
+    },
+    getHour(){
+        var now = new Date();
+        return ((now.getHours()+'').length ==1? '0'+now.getHours(): now.getHours())+':'+
+            ((now.getMinutes()+'').length ==1? '0'+now.getHours() : now.getHours());
     }
 
-    function getHour(){
-        let now = new Date();
-        return now.getHours()+':'+now.getMinutes();
-    }
+};
 
-
-    return {
-        getDay,
-        getHour
-
-
-
-    }
-
-
-}
+module.exports = hourUtils;

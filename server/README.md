@@ -196,3 +196,8 @@ Per cambiare porta, al momento della digitazione del comando su shell, inserire 
 #### Ritorno
     JSON che ha come chiavi il palinsesto televisivo e come valore un JSON sulle informazioni riguardanti la diretta.
     !!--Da vedere meglio --!!
+    
+    
+    [
+    channel_id: { title, startime, endtime }
+    ]

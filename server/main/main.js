@@ -7,16 +7,19 @@ var port = 8083;
 
 var express = getModule('express');
 var fs = require('fs');
+var cacheLevel = require('../main/cacheLayer/cacheFirstLevel');
 var service = express();
 
+var cache_minutes= "";
 process.argv.forEach(function (val, index, array) {
     if(val.indexOf('port=') != -1) port = (val.replace('port=',''));
+    if(val.indexOf('cache-minutes=') != -1) cache_minutes = (val.replace('cache-minutes=',''));
 });
 
 initRoute(service);
 
 service.get('/', function(req, res){
-    res.send('Hello World');
+    res.send('Guida Tv Social Welcome on Board!');
 });
 
 service.listen(port, function(){
@@ -25,12 +28,12 @@ service.listen(port, function(){
 
 
 
-
 function initRoute(service){
     fs.readdir(route, function(err, files){
         if(!err)
             files.forEach(x => getRoute(x.replace('.js',''))(service));
     });
+    cacheLevel.startCaching(cache_minutes);
 }
 
 function getRoute(route_name){
