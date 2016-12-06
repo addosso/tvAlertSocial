@@ -42,8 +42,11 @@ const mappingCanali = {
 var http = require('http');
 var hourUtils = require('../utils/hourUtils');
 var comparisonUtil = require('../utils/comparisonUtils');
+var _verbose = false;
 
-function mediasetController(){
+function mediasetController(verbose){
+
+    if(verbose) _verbose = verbose;
 
     function mediasetProgrammazione(day, canale, callback) {
        return  http.request({
@@ -69,7 +72,7 @@ function mediasetController(){
 
     function fromNowMediaset(canale, callback){
 
-        console.log("CHIAMATO MEDIASET", canale);
+        if(_verbose) console.log("HTTP TO MEDIASET : channel ", canale);
         return http.request({
             host: MEDIASET_CHANNEL,
             method: 'GET',
@@ -91,7 +94,7 @@ function mediasetController(){
                 var toEnd = false;
                 var totalArray = response.events.map(program => {
                     if(toEnd) nowArray.push(program);
-                    if(program.startTime > hourUtils.getHour() && !toEnd){
+                    if(program.startTime >= hourUtils.getHour() && !toEnd){
                         toEnd = true;
                         nowArray.push(program);
                     }

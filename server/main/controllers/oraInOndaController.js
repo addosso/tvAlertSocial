@@ -21,13 +21,16 @@ var mediasetPremiumObjectifier = require('../objectifier/mediasetPremiumObjectif
 var raiObjectifier = require('../objectifier/raiObjectifier');
 var hashTagService = require('../externalServices/hashTagService');
 
+var __config__  = require('../config/channel_config');
+
 function oraInOndaController(responseObject,callBackFinish){
 
     var objCheckResponse = {};
-    populateCheckObjResponse(mediasetController.mappingCanali, objCheckResponse);
-    populateCheckObjResponse(raiController.mappingCanali, objCheckResponse);
-    populateCheckObjResponse(mediasetPremiumController.mappingCanali, objCheckResponse);
-    populateCheckObjResponse(skyController.mappingCanali, objCheckResponse);
+
+    populateCheckObjResponse(__config__.mediaset  || mediasetController.mappingCanali, objCheckResponse);
+    populateCheckObjResponse(__config__.rai  || raiController.mappingCanali, objCheckResponse);
+    populateCheckObjResponse(__config__.mediasetPremium  || mediasetPremiumController.mappingCanali, objCheckResponse);
+    populateCheckObjResponse(__config__.sky  || skyController.mappingCanali, objCheckResponse);
 
     function callBackHashTag(canale, data, hashtag){
         objCheckResponse[canale] = true;
@@ -43,10 +46,10 @@ function oraInOndaController(responseObject,callBackFinish){
         hashTagService.hashTagService(obje.show.title, callBackHashTag.bind(null, canale,obje));
     }
 
-    response(mediasetController.fromNowMediaset, mediasetController.mappingCanali, callBackCheck, mediasetObjectifier);
-    response(raiController.raiFromNow, raiController.mappingCanali, callBackCheck, raiObjectifier);
-    response(mediasetPremiumController.mediasetPremiumFromNow, mediasetPremiumController.mappingCanali, callBackCheck, mediasetPremiumObjectifier);
-    response(skyController.skyFromNow, skyController.mappingCanali, callBackCheck, skyObjectifier);
+    response(mediasetController.fromNowMediaset, __config__.mediaset  || mediasetController.mappingCanali, callBackCheck, mediasetObjectifier);
+    response(raiController.raiFromNow,__config__.rai  || raiController.mappingCanali, callBackCheck, raiObjectifier);
+    response(mediasetPremiumController.mediasetPremiumFromNow, __config__.mediasetPremium  || mediasetPremiumController.mappingCanali, callBackCheck, mediasetPremiumObjectifier);
+    response(skyController.skyFromNow, __config__.sky  || skyController.mappingCanali, callBackCheck, skyObjectifier);
 
 
     function response(from_now_function, mapping_canali, callback, objectifier){

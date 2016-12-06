@@ -9,11 +9,13 @@ var express = getModule('express');
 var fs = require('fs');
 var cacheLevel = require('../main/cacheLayer/cacheFirstLevel');
 var service = express();
+var verboseService = require('../main/verbose/verbosing');
 
 var cache_minutes= "";
 process.argv.forEach(function (val, index, array) {
     if(val.indexOf('port=') != -1) port = (val.replace('port=',''));
     if(val.indexOf('cache-minutes=') != -1) cache_minutes = (val.replace('cache-minutes=',''));
+    if(val.indexOf('verbose-http-call') != -1) verboseService.setVerbose(true);
 });
 
 initRoute(service);
